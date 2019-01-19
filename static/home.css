@@ -1,0 +1,97 @@
+.header {
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+}
+#navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+#active-page
+{
+  text-shadow:#FC0 1px 0 10px;
+  border-bottom: 2px solid currentColor !important;
+  border-top: 2px solid currentColor !important;
+}
+#navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+#navbar a:hover {
+  background-color: #4CAF50;
+  color: black;
+}
+#navbar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+.content {
+  padding: 16px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+.sticky + .content {
+  padding-top: 60px;
+}
+.one{
+    transition: 0.2s linear;
+}
+.outersec
+{
+  height: 100%;
+  width: 100%;
+  margin: auto; 
+  display: table;
+  top:0;
+  /*background: url(https://wallpaperscraft.com/image/surface_network_light_background_texture_50497_1920x1200.jpg) no-repeat 50% 50%;
+  background-size: cover;*/
+}
+.outer
+{
+  max-width: none;
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+}
+.inner
+{
+  padding: 10% 0% 10% 0%;
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+}
+.btn
+{
+  border:3px solid #036A81;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 9px;
+  color: #036A81;
+  font-size: 150%;
+  padding: 5px; 
+  margin-bottom: 10px;
+}
+.btn:hover
+{
+  border: 3px solid rgb(0,0,0);
+  color: rgb(0,0,0);
+}
+.l1
+{
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+.l1:hover
+{
+  color: #b83dba;
+}
