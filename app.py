@@ -23,7 +23,9 @@ def image_properties(image_name,image_data):
 	
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	clarity = cv2.Laplacian(gray, cv2.CV_64F).var()
-	
+	if math.isnan(clarity):
+		return False
+
 	b=img[:,:,0]
 	g=img[:,:,1]
 	r=img[:,:,2]
@@ -32,22 +34,31 @@ def image_properties(image_name,image_data):
 	b=np.array(b,np.float32)
 	gs = (np.sqrt(.241*(r**2)+.691*(g**2)+.068*(b**2)))
 	Brightness = np.average(gs)
-	
+	if math.isnan(Brightness):
+		return False
+
 	dp=math.sqrt(img.shape[0]**2+img.shape[1]**2)
 	Pixel=dp/5
-	
+	if math.isnan(Pixel):
+		return False
+
 	hist = cv2.calcHist([img], [0], None, [256], [0, 256])
 	e=sum(hist*np.log2(hist))
 	Contrast=e[0]
-	    
+	if math.isnan(Contrast):
+		return False
 	Resolution = min(img.shape[0],img.shape[1])
-	
+	if math.isnan(Resolution):
+		return False
+
 	rows, cols = img.shape[:2]
 	kernel_x = cv2.getGaussianKernel(cols,200)
 	kernel_y = cv2.getGaussianKernel(rows,200)
 	kernel = kernel_y*kernel_x.T
 	mask = 255 * kernel / np.linalg.norm(kernel)
 	Vignette=np.amax(mask)
+	if math.isnan(Vignette):
+		return False
 	data={
 		'clarity':str(clarity),
 		'Brightness':str(Brightness),
@@ -57,7 +68,7 @@ def image_properties(image_name,image_data):
 		'Vignette':str(Vignette)
 	}
 	user_data.update_one({'Image_Name':image_name},{"$set":data})
-
+	return True
 
 @app.route('/leaderboard')
 def leaderboard():
@@ -121,9 +132,12 @@ def home():
 		data['Email']=email
 		data['Image_data']=img_data
 		user_data.insert_one(data)
-		image_properties(data['Image_Name'],data['Image_data'])
-
-		return render_template("home.html",error="Congrats! You have successfully submitted your entry. Check out the leaderboard for results")
+		message=image_properties(data['Image_Name'],data['Image_data'])
+		if message:
+			return render_template("home.html",error="Congrats! You have successfully submitted your entry. Check out the leaderboard for results")
+		else:
+			user_data.delete_one({'Roll_No':rollno})
+			return render_template("home.html",error="Error! Image is corrupted")
 
 
 
