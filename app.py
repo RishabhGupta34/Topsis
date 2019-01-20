@@ -94,7 +94,6 @@ def leaderboard():
 	df=pd.DataFrame({'image_name':name,'clarity': clarity,
            'Brightness': Brightness,'Pixel':Pixel,'Contrast':Contrast,'Resolution':Resolution,'Vignette':Vignette})
 	criteria=[MAX,MAX,MAX,MAX,MIN,MAX]
-	print(df)
 	ds=np.array(df)
 	ds1=ds[:,1:]
 	data = Data(ds1, criteria,
@@ -104,7 +103,7 @@ def leaderboard():
 	t=closeness.TOPSIS()
 	dec=t.decide(data)
 	rank=dec.rank_
-	y = rank.astype(np.float)
+	y = rank.astype(np.int)
 	topsis_score=dec.e_.closeness
 	name=ds[:,0]
 	result=[s_name,s_roll,y,topsis_score]
