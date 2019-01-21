@@ -12,11 +12,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app=Flask(__name__)
-app.secret_key = 'A?DSGREfgska[]dkoRERWF???::HLELFS'
+app.secret_key = os.getenv('APP_SECRET_KEY')
 
 
 MONGODB_URI = os.getenv("DATABASE_URL")
-print(MONGODB_URI)
 client = MongoClient(MONGODB_URI)
 db = client.get_database("topsis")
 user_data = db.user_data
