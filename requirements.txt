@@ -25,6 +25,7 @@ pymongo==3.7.2
 pyparsing==2.3.1
 pytest==4.1.1
 python-dateutil==2.7.5
+python-dotenv==0.10.1
 pytz==2018.9
 scikit-criteria==0.2.10
 scikit-learn==0.20.2

@@ -7,18 +7,23 @@ from skcriteria import Data, MIN, MAX
 from skcriteria.madm import closeness, simple
 from operator import itemgetter
 import math
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 app=Flask(__name__)
 app.secret_key = 'A?DSGREfgska[]dkoRERWF???::HLELFS'
 
 
-MONGODB_URI = "mongodb://test:test12@ds159184.mlab.com:59184/topsis"
+MONGODB_URI = os.getenv("DATABASE_URL")
+print(MONGODB_URI)
 client = MongoClient(MONGODB_URI)
 db = client.get_database("topsis")
 user_data = db.user_data
 
 def image_properties(image_name,image_data):
-	nparr = np.fromstring(image_data, np.uint8)
+	# nparr = np.fromstring(image_data, np.uint8)
+	nparr = np.frombuffer(image_data, dtype=np.uint8)
 	img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 	
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -41,7 +46,6 @@ def image_properties(image_name,image_data):
 	Pixel=dp/5
 	if math.isnan(Pixel):
 		return False
-
 	hist = cv2.calcHist([img], [0], None, [256], [0, 256])
 	e=sum(hist*np.log2(hist))
 	Contrast=e[0]
