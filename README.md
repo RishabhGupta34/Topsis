@@ -10,4 +10,5 @@ The criterion used for the calculation of the topsis score are:
   ### 5.  Resolution
   ### 6.  Vignette
   
-In which all are positive criterion except for vignette.
+  
+In which all are positive criterion except for vignette. Finally the topsis score is calculated using the [*closeness* module in the madm *package*](https://scikit-criteria.readthedocs.io/en/latest/api/madm/closeness.html "Documentation of the closeness module").
